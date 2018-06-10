@@ -3,6 +3,9 @@ package org.litespring.test.v1;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.litespring.beans.BeanDefinition;
+import org.litespring.beans.factory.BeanFactory;
+import org.litespring.beans.factory.support.DefaultBeanFactory;
 import org.litespring.service.v1.PetStoreService;
 
 import static org.junit.Assert.*;
@@ -22,13 +25,16 @@ public class BeanFactoryTest {
     }
 
     @Test
-    public void testGetBean(){
+    public void testGetBean() {
+
         BeanFactory facotry = new DefaultBeanFactory("petstore-v1.xml");
+
         BeanDefinition beanDef = facotry.getBeanDefinition("petStore");
 
         assertEquals("org.litespring.service.v1.PetStoreService", beanDef.getBeanClassName());
 
         PetStoreService petStore = (PetStoreService) facotry.getBean("petStore");
+
         assertNotNull(petStore);
     }
 

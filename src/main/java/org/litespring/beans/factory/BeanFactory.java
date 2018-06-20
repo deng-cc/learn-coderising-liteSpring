@@ -8,9 +8,7 @@ import org.litespring.beans.BeanDefinition;
  * Time: 14:51
  */
 public interface BeanFactory {
-    BeanDefinition getBeanDefinition(String beanId);
 
     Object getBean(String beanId);
 
-    void registerBeanDefinition(String id, BeanDefinition beanDef);
 }

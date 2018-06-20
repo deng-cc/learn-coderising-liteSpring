@@ -4,8 +4,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import org.litespring.beans.factory.BeanFactory;
 import org.litespring.beans.factory.exception.BeanDefinitionStoreException;
+import org.litespring.beans.factory.support.BeanDefinitionRegistry;
 import org.litespring.beans.factory.support.GenericBeanDefinition;
 import org.litespring.utils.ClassUtil;
 
@@ -24,10 +24,10 @@ public class XmlBeanDefinitionReader {
     private static final String BEAN_XML_ATTR_CLASS = "class";
     private static final String BEAN_XML_TAG = "bean";
 
-    private BeanFactory beanFactory;
+    private BeanDefinitionRegistry registry;
 
-    public XmlBeanDefinitionReader(BeanFactory beanFactory) {
-        this.beanFactory = beanFactory;
+    public XmlBeanDefinitionReader(BeanDefinitionRegistry beanFactory) {
+        this.registry = beanFactory;
     }
 
     public void loadBeanDefinition(String configClasspath) {
@@ -38,7 +38,7 @@ public class XmlBeanDefinitionReader {
             for (Element e : beanList) {
                 String id = e.attributeValue(BEAN_XML_ATTR_ID);
                 String className = e.attributeValue(BEAN_XML_ATTR_CLASS);
-                beanFactory.registerBeanDefinition(id, new GenericBeanDefinition(id, className));
+                registry.registerBeanDefinition(id, new GenericBeanDefinition(id, className));
             }
 
         } catch (DocumentException e) {

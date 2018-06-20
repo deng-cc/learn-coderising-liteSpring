@@ -15,17 +15,12 @@ import java.util.Map;
  * @version 20180610
  * @date 2018/6/10
  */
-public class DefaultBeanFactory implements BeanFactory {
+public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
 
     private Map<String, BeanDefinition> beanDefs;
 
     public DefaultBeanFactory() {
         this.beanDefs = new HashMap<String, BeanDefinition>();
-    }
-
-    @Override
-    public BeanDefinition getBeanDefinition(String beanId) {
-        return beanDefs.get(beanId);
     }
 
     @Override
@@ -41,6 +36,11 @@ public class DefaultBeanFactory implements BeanFactory {
         } catch (Exception e) {
             throw new BeanCreationException("create bean for " + beanDef.getBeanClassName() + "failed");
         }
+    }
+
+    @Override
+    public BeanDefinition getBeanDefinition(String beanId) {
+        return beanDefs.get(beanId);
     }
 
     @Override

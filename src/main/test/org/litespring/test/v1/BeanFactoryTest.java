@@ -9,6 +9,7 @@ import org.litespring.beans.factory.BeanFactory;
 import org.litespring.beans.factory.exception.BeanCreationException;
 import org.litespring.beans.factory.exception.BeanDefinitionStoreException;
 import org.litespring.beans.factory.support.DefaultBeanFactory;
+import org.litespring.beans.factory.xml.XmlBeanDefinitionReader;
 import org.litespring.service.v1.PetStoreService;
 
 import static org.junit.Assert.*;
@@ -30,7 +31,10 @@ public class BeanFactoryTest {
     @Test
     public void testGetBean() {
 
-        BeanFactory facotry = new DefaultBeanFactory("petstore-v1.xml");
+        BeanFactory facotry = new DefaultBeanFactory();
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(facotry);
+        reader.loadBeanDefinition("petstore-v1.xml");
+
         BeanDefinition beanDef = facotry.getBeanDefinition("petStore");
         assertEquals("org.litespring.service.v1.PetStoreService", beanDef.getBeanClassName());
 
@@ -40,10 +44,11 @@ public class BeanFactoryTest {
 
     @Test
     public void testInvalidBean() {
-
-        BeanFactory factory = new DefaultBeanFactory("petstore-v1.xml");
+        BeanFactory facotry = new DefaultBeanFactory();
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(facotry);
+        reader.loadBeanDefinition("petstore-v1.xml");
         try {
-            factory.getBean("invalidBean");
+            facotry.getBean("invalidBean");
         } catch (BeanCreationException e) {
             return;
         }
@@ -52,9 +57,10 @@ public class BeanFactoryTest {
 
     @Test
     public void testInvalidXml() {
-
         try {
-            BeanFactory factory = new DefaultBeanFactory("petstore-invalid.xml");
+            BeanFactory facotry = new DefaultBeanFactory();
+            XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(facotry);
+            reader.loadBeanDefinition("petstore-invalid.xml");
         } catch (BeanDefinitionStoreException e) {
             return;
         }

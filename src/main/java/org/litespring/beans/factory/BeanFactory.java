@@ -11,4 +11,6 @@ public interface BeanFactory {
     BeanDefinition getBeanDefinition(String beanId);
 
     Object getBean(String beanId);
+
+    void registerBeanDefinition(String id, BeanDefinition beanDef);
 }

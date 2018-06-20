@@ -19,8 +19,14 @@ import static org.junit.Assert.*;
  * Time: 11:51
  */
 public class BeanFactoryTest {
+
+    DefaultBeanFactory facotry = null;
+    XmlBeanDefinitionReader reader = null;
+
     @Before
     public void setUp() throws Exception {
+        facotry = new DefaultBeanFactory();
+        reader = new XmlBeanDefinitionReader(facotry);
     }
 
     @After
@@ -29,9 +35,6 @@ public class BeanFactoryTest {
 
     @Test
     public void testGetBean() {
-
-        DefaultBeanFactory facotry = new DefaultBeanFactory();
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(facotry);
         reader.loadBeanDefinition("petstore-v1.xml");
 
         BeanDefinition beanDef = facotry.getBeanDefinition("petStore");
@@ -43,8 +46,6 @@ public class BeanFactoryTest {
 
     @Test
     public void testInvalidBean() {
-        DefaultBeanFactory facotry = new DefaultBeanFactory();
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(facotry);
         reader.loadBeanDefinition("petstore-v1.xml");
         try {
             facotry.getBean("invalidBean");
@@ -57,8 +58,6 @@ public class BeanFactoryTest {
     @Test
     public void testInvalidXml() {
         try {
-            DefaultBeanFactory facotry = new DefaultBeanFactory();
-            XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(facotry);
             reader.loadBeanDefinition("petstore-invalid.xml");
         } catch (BeanDefinitionStoreException e) {
             return;

@@ -15,7 +15,8 @@ import java.util.Map;
  * @version 20180610
  * @date 2018/6/10
  */
-public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefinitionRegistry {
+public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
+        implements ConfigurableBeanFactory, BeanDefinitionRegistry {
 
     private Map<String, BeanDefinition> beanDefs;
     private ClassLoader beanClassLoader;
@@ -30,6 +31,18 @@ public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefiniti
         if (beanDef == null) {
             throw new BeanCreationException("Bean Definition does not exist");
         }
+        if (beanDef.isSingleton()) {
+            Object bean = this.getSingleton(beanId);
+            if (bean == null) {
+                bean = createBean(beanDef);
+                registerSingleton(beanId, bean);
+            }
+            return bean;
+        }
+        return createBean(beanDef);
+    }
+
+    private Object createBean(BeanDefinition beanDef) {
         ClassLoader classLoader = getBeanClassLoader();
         try {
             Class<?> clazz = classLoader.loadClass(beanDef.getBeanClassName());

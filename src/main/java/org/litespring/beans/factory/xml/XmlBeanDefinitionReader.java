@@ -115,6 +115,7 @@ public class XmlBeanDefinitionReader {
             return valueHolder;
         }
         else {
+            //todo
             throw new RuntimeException(elementName + " must specify a ref or value");
         }
     }

@@ -31,10 +31,14 @@ public class ApplicationContextTest {
     public void testGetBeanProperty() {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("petstore-v2.xml");
         PetStoreService petStore = (PetStoreService) applicationContext.getBean("petStore");
+
         Assert.assertNotNull(petStore.getAccountDao());
         Assert.assertNotNull(petStore.getItemDao());
         Assert.assertTrue(petStore.getAccountDao() instanceof AccountDao);
         Assert.assertTrue(petStore.getItemDao() instanceof ItemDao);
+
+        Assert.assertEquals("liuxin", petStore.getOwner());
+
     }
 
 }

@@ -77,8 +77,6 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
                         break;
                     }
                 }
-
-
             }
         } catch (Exception e) {
             throw new BeanCreationException("Failed to obtain BeanInfo for class [" + beanDef.getBeanClassName() + "]", e);

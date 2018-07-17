@@ -1,6 +1,6 @@
 package org.litespring.core.io;
 
-import org.litespring.utils.ClassUtil;
+import org.litespring.utils.ClassUtils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,12 +20,12 @@ public class ClassPathResource implements Resource {
 
     public ClassPathResource(String configClasspath) {
         this.path = configClasspath;
-        this.classLoader = ClassUtil.getDefaultClassLoader();
+        this.classLoader = ClassUtils.getDefaultClassLoader();
     }
 
     public ClassPathResource(String path, ClassLoader classLoader) {
         this.path = path;
-        this.classLoader = classLoader == null ? ClassUtil.getDefaultClassLoader() : classLoader;
+        this.classLoader = classLoader == null ? ClassUtils.getDefaultClassLoader() : classLoader;
     }
 
     @Override

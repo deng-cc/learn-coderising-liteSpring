@@ -39,6 +39,7 @@ public class ApplicationContextTest {
 
         Assert.assertEquals("liuxin", petStore.getOwner());
 
+        Assert.assertEquals(2, petStore.getVersion());
     }
 
 }

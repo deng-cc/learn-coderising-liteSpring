@@ -16,7 +16,6 @@ import org.junit.runners.Suite;
         BeanFactoryTest.class,
         ResourceTest.class
 })
-
 public class AllTestV1 {
 
 }

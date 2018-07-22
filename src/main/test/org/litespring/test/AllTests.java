@@ -4,6 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.litespring.test.v1.AllTestV1;
 import org.litespring.test.v2.AllTestV2;
+import org.litespring.test.v3.AllTestV3;
 
 /**
  * AllTests.
@@ -15,7 +16,8 @@ import org.litespring.test.v2.AllTestV2;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         AllTestV1.class,
-        AllTestV2.class
+        AllTestV2.class,
+        AllTestV3.class
 })
 public class AllTests {
 }

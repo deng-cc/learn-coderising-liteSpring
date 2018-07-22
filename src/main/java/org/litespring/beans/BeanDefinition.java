@@ -16,6 +16,8 @@ public interface BeanDefinition {
 
     boolean isPrototype();
 
+    String getId();
+
     String getScope();
 
     void setScope(String scope);
@@ -23,4 +25,8 @@ public interface BeanDefinition {
     String getBeanClassName();
 
     List<PropertyValue> getPropertyValues();
+
+    ConstructorArgument getConstructorArgument();
+
+    boolean hasConstructorArgumentValues();
 }

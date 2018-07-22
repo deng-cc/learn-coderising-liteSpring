@@ -6,6 +6,7 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.litespring.beans.BeanDefinition;
+import org.litespring.beans.ConstructorArgument;
 import org.litespring.beans.PropertyValue;
 import org.litespring.beans.factory.config.RuntimeBeanReference;
 import org.litespring.beans.factory.config.TypedStringValue;
@@ -13,7 +14,7 @@ import org.litespring.beans.factory.exception.BeanDefinitionStoreException;
 import org.litespring.beans.factory.support.BeanDefinitionRegistry;
 import org.litespring.beans.factory.support.GenericBeanDefinition;
 import org.litespring.core.io.Resource;
-import org.litespring.utils.StringUtil;
+import org.litespring.utils.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +37,8 @@ public class XmlBeanDefinitionReader {
     private static final String BEAN_XML_ATTR_NAME = "name";
     private static final String BEAN_XML_ATTR_VALUE = "value";
     private static final String BEAN_XML_ATTR_REF = "ref";
+    private static final String BEAN_XML_ATTR_CONSTRUCTOR_ARG = "constructor-arg";
+    private static final String BEAN_XML_ATTR_TYPE = "type";
     private static final String BEAN_XML_ELE_PROPERTY = "property";
     private static final String BEAN_XML_TAG = "bean";
 
@@ -59,6 +62,7 @@ public class XmlBeanDefinitionReader {
                 if (e.attribute(BEAN_XML_ATTR_SCOPE) != null) {
                     beanDef.setScope(e.attributeValue(BEAN_XML_ATTR_SCOPE));
                 }
+                parseConstructorArgElements(e, beanDef);
                 parsePropertyElement(e, beanDef);
                 registry.registerBeanDefinition(id, beanDef);
             }
@@ -77,13 +81,37 @@ public class XmlBeanDefinitionReader {
         }
     }
 
+    private void parseConstructorArgElements(Element beanEle, BeanDefinition beanDef) {
+        Iterator iterator = beanEle.elementIterator(BEAN_XML_ATTR_CONSTRUCTOR_ARG);
+        while (iterator.hasNext()) {
+            Element ele = (Element) iterator.next();
+            parseConstructorArgElement(ele, beanDef);
+        }
+
+    }
+
+    private void parseConstructorArgElement(Element ele, BeanDefinition beanDef) {
+        String typeAttr = ele.attributeValue(BEAN_XML_ATTR_TYPE);
+        String nameAttr = ele.attributeValue(BEAN_XML_ATTR_NAME);
+        Object value = parsePropertyValue(ele, null);
+        ConstructorArgument.ValueHolder valueHolder = new ConstructorArgument.ValueHolder(value);
+        if (StringUtils.hasLength(typeAttr)) {
+            valueHolder.setType(typeAttr);
+        }
+        if (StringUtils.hasLength(nameAttr)) {
+            valueHolder.setName(nameAttr);
+        }
+        beanDef.getConstructorArgument().addArgumentValue(valueHolder);
+    }
+
+
     private void parsePropertyElement(Element beanEle, BeanDefinition beanDef) {
 
         Iterator iterator = beanEle.elementIterator(BEAN_XML_ELE_PROPERTY);
         while (iterator.hasNext()) {
             Element element = (Element) iterator.next();
             String propertyName = element.attributeValue(BEAN_XML_ATTR_NAME);
-            if (!StringUtil.hasLength(propertyName)) {
+            if (!StringUtils.hasLength(propertyName)) {
                 logger.fatal("Tag 'property' must have a 'name' attribute'");
                 return;
             }
@@ -104,7 +132,7 @@ public class XmlBeanDefinitionReader {
 
         if (hasRefAttribute) {
             String refName = ele.attributeValue(BEAN_XML_ATTR_REF);
-            if (!StringUtil.hasText(refName)) {
+            if (!StringUtils.hasText(refName)) {
                 logger.error(elementName + " contains empty 'ref' attribute");
             }
             RuntimeBeanReference ref = new RuntimeBeanReference(refName);

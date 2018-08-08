@@ -33,7 +33,7 @@ public class BeanDefinitionValueResolverTest {
     public void testResolveRuntimeBeanReference() {
         DefaultBeanFactory factory = new DefaultBeanFactory();
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
-        reader.loadBeanDefinition(new ClassPathResource("petstore-v2.xml"));
+        reader.loadBeanDefinitions(new ClassPathResource("petstore-v2.xml"));
 
         BeanDefinitionValueResolver resolver = new BeanDefinitionValueResolver(factory);
         RuntimeBeanReference reference = new RuntimeBeanReference("accountDao");
@@ -47,7 +47,7 @@ public class BeanDefinitionValueResolverTest {
     public void testResolveTypedStringValue() {
         DefaultBeanFactory factory = new DefaultBeanFactory();
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
-        reader.loadBeanDefinition(new ClassPathResource("petstore-v2.xml"));
+        reader.loadBeanDefinitions(new ClassPathResource("petstore-v2.xml"));
 
         BeanDefinitionValueResolver resolver = new BeanDefinitionValueResolver(factory);
         TypedStringValue stringValue = new TypedStringValue("test");

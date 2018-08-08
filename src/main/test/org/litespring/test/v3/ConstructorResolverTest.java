@@ -25,7 +25,7 @@ public class ConstructorResolverTest {
         DefaultBeanFactory factory = new DefaultBeanFactory();
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
         Resource resource = new ClassPathResource("petstore-v3.xml");
-        reader.loadBeanDefinition(resource);
+        reader.loadBeanDefinitions(resource);
         BeanDefinition bd = factory.getBeanDefinition("petStore");
 
         ConstructorResolver resolver = new ConstructorResolver(factory);

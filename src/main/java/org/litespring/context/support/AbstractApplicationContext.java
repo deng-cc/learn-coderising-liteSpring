@@ -23,7 +23,7 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
         factory.setBeanClassLoader(getBeanClassLoader());
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
         Resource resource = getResourceByPath(path);
-        reader.loadBeanDefinition(resource);
+        reader.loadBeanDefinitions(resource);
     }
 
     abstract Resource getResourceByPath(String path);

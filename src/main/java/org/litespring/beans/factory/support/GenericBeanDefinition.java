@@ -25,6 +25,9 @@ public class GenericBeanDefinition implements BeanDefinition {
     private List<PropertyValue> propertyValues;
     private ConstructorArgument constructorArgument = new ConstructorArgument();
 
+    public GenericBeanDefinition() {
+    }
+
     public GenericBeanDefinition(String id, String beanClassName) {
         this.id = id;
         this.beanClassName = beanClassName;

@@ -38,6 +38,6 @@ public class MetadataReaderTest {
         Assert.assertFalse(amd.isAbstract());
         Assert.assertFalse(amd.isFinal());
         Assert.assertEquals("org.litespring.service.v4.PetStoreService", amd.getClassName());
-
+        //todo 54
     }
 }

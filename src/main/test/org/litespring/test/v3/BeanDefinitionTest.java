@@ -27,7 +27,7 @@ public class BeanDefinitionTest {
         DefaultBeanFactory factory = new DefaultBeanFactory();
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
         Resource resource = new ClassPathResource("petstore-v3.xml");
-        reader.loadBeanDefinition(resource);
+        reader.loadBeanDefinitions(resource);
         BeanDefinition bd = factory.getBeanDefinition("petStore");
         Assert.assertEquals("org.litespring.service.v3.PetStoreService", bd.getBeanClassName());
 
